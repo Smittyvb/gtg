@@ -93,7 +93,8 @@ class TagStore(BaseStore):
 
             return tag
 
-    def from_xml(self, xml: Element) -> 'SavedSearchStore':
+
+    def from_xml(self, xml: Element) -> None:
         """Load searches from an LXML element."""
 
         elements = list(xml.iter(self.XML_TAG))
