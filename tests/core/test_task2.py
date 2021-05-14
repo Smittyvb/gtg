@@ -155,7 +155,7 @@ class TestTask2(TestCase):
         task4.children.append(task5)
         task4.children.append(task6)
 
-        # Testear cambiar due de root
+        # Test changing parent's due
         random_date = Date('1996-2-3')
         random_date2 = Date('2010-7-10')
 
@@ -168,7 +168,7 @@ class TestTask2(TestCase):
         task5.due_date = random_date
         task6.due_date = random_date
 
-        # Testear cambiar due de root - fuzzy
+        # Test changes in the parent - Fuzzy
         task1.due_date = Date.now()
 
         self.assertEqual(task1.due_date, Date.now())
@@ -178,7 +178,7 @@ class TestTask2(TestCase):
         self.assertEqual(task5.due_date, random_date)
         self.assertEqual(task6.due_date, random_date)
 
-        # Testear cambiar due de child - mas grande que parent
+        # Test changing child's due (after parent's)
         task3.due_date = random_date2
         self.assertEqual(task3.due_date, random_date2)
         self.assertEqual(task4.due_date, random_date)
@@ -186,7 +186,7 @@ class TestTask2(TestCase):
         self.assertEqual(task6.due_date, random_date)
 
 
-        # Testear cambiar due de child - mas chico que parent
+        # Test changing child's due (before parent's)
         task4.due_date = random_date2
         task3.due_date = random_date
 
@@ -194,14 +194,14 @@ class TestTask2(TestCase):
         self.assertEqual(task5.due_date, random_date)
         self.assertEqual(task6.due_date, random_date)
 
-        # Testear cambiar due de parent - mas chico que child
+        # Test changing parent's due (before child's)
         task4.due_date = random_date
         task3.due_date = random_date2
 
         self.assertEqual(task3.due_date, random_date2)
         self.assertEqual(task4.due_date, random_date)
 
-        # Testear cambiar due de parent - none o nodate
+        # Test changing parent's due (None or nodate)
         task2.due_date = random_date
         task1.due_date = None
         self.assertEqual(task2.due_date, random_date)
