@@ -194,6 +194,12 @@ class Task2:
     def __str__(self) -> str:
         """String representation."""
 
+        return f'Task: {self.title} ({self.id})'
+
+
+    def __repr__(self) -> str:
+        """String representation."""
+
         tags = ', '.join([t.name for t in self.tags])
         return (f'Task "{self.title}" with id "{self.id}".'
                 f'Status: {self.status}, tags: {tags}')
