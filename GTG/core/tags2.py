@@ -42,7 +42,14 @@ class Tag2:
     actionable: bool = True
     children: List = field(default_factory=list)
 
+
     def __str__(self) -> str:
+        """String representation."""
+
+        return f'Tag: {self.name} ({self.id})'
+
+
+    def __repr__(self) -> str:
         """String representation."""
 
         return (f'Tag "{self.name}" with id "{self.id}"')
