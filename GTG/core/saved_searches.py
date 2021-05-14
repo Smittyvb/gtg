@@ -38,7 +38,14 @@ class SavedSearch:
     icon: str = None
     children: List = field(default_factory=list)
 
+
     def __str__(self) -> str:
+        """String representation."""
+
+        return f'Saved Search: {self.name} ({self.id})'
+
+
+    def __repr__(self) -> str:
         """String representation."""
 
         return (f'Saved Search "{self.name}" '
