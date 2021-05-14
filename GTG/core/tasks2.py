@@ -48,18 +48,18 @@ SUB_REGEX = re.compile(r'\{\!.+\!\}')
 class Status(Enum):
     """Status for a task."""
 
-    ACTIVE = 0
-    DONE = 1
-    DISMISSED = -1
+    ACTIVE = 'Active'
+    DONE = 'Done'
+    DISMISSED = 'Dismissed'
 
 
 class Filter(Enum):
     """Types of filters."""
 
-    STATUS = 0
-    TAG = 1
-    ROOT = 2
-    CHILDREN = 3
+    STATUS = 'Status'
+    TAG = 'Tag'
+    PARENT = 'Parent'
+    CHILDREN = 'Children'
 
 
 # ------------------------------------------------------------------------------
@@ -323,13 +323,7 @@ class TaskStore(BaseStore):
         for task in self.lookup.values():
             element = SubElement(root, self.XML_TAG)
             element.set('id', str(task.id))
-
-            if task.status == Status.ACTIVE:
-                element.set('status', 'Active')
-            elif task.status == Status.DONE:
-                element.set('status', 'Done')
-            else:
-                element.set('status', 'Dismissed')
+            element.set('status', str(task.status))
 
             title = SubElement(element, 'title')
             title.text = task.title
