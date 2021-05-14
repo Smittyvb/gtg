@@ -195,7 +195,7 @@ class Task2:
         """String representation."""
 
         tags = ', '.join([t.name for t in self.tags])
-        return (f'Task "{self.title}" with id "{self.id}. "'
+        return (f'Task "{self.title}" with id "{self.id}".'
                 f'Status: {self.status}, tags: {tags}')
 
 
