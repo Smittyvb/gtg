@@ -323,7 +323,7 @@ class TaskStore(BaseStore):
         for task in self.lookup.values():
             element = SubElement(root, self.XML_TAG)
             element.set('id', str(task.id))
-            element.set('status', str(task.status))
+            element.set('status', task.status.value)
 
             title = SubElement(element, 'title')
             title.text = task.title
