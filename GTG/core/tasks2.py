@@ -86,7 +86,7 @@ class Task2:
 
 
     def toggle_status(self, propagate: bool = True) -> None:
-        if self.status == Status.ACTIVE:
+        if self.status is Status.ACTIVE:
             self.status = Status.DONE
             self.date_closed = Date.today()
 
@@ -94,7 +94,7 @@ class Task2:
             self.status = Status.ACTIVE
             self.date_closed = Date.no_date()
 
-            if self.parent and self.parent.status != Status.ACTIVE:
+            if self.parent and self.parent.status is not Status.ACTIVE:
                 self.parent.toggle_status(propagate=False)
 
         if propagate:
