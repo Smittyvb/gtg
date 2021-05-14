@@ -410,7 +410,7 @@ class TaskStore(BaseStore):
                 self.lookup[parent_id].children.remove(child)
                 return
 
-        raise KeyError
+        raise KeyError(item_id)
 
 
     def filter(self, filter_type: Filter, arg = None) -> List:
