@@ -34,6 +34,7 @@ class SavedSearch(GObject.Object):
     """A saved search."""
 
     __gtype_name__ = 'SavedSearch'
+    __slots__ = ['id', 'name', 'query', 'icon', 'children']
 
 
     def __init__(self, id: uuid4, name: str, query: str) -> None:
