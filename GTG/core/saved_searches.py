@@ -101,15 +101,13 @@ class SavedSearchStore(BaseStore):
         for element in elements:
             parent_name = element.get('parent')
 
-            if parent_name:
+            if parent_name and parent_name != 'search':
                 tid = element.get('id')
 
                 parent = self.find(parent_name)
+                self.parent(tid, parent.id)
 
-                if parent:
-                    self.parent(tid, parent.id)
-
-                    log.debug('Added %s as child of %s', tag, parent)
+                log.debug('Added %s as child of %s', tag, parent)
 
 
     def to_xml(self) -> Element:
@@ -121,7 +119,7 @@ class SavedSearchStore(BaseStore):
 
         for search in self.data:
             for child in search.children:
-                parent_map[child.id] = search.id
+                parent_map[child.id] = search.name
 
         for search in self.lookup.values():
             element = SubElement(root, self.XML_TAG)
