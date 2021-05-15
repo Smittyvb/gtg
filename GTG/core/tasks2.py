@@ -487,7 +487,7 @@ class TaskStore(BaseStore):
         if filter_type == Filter.STATUS:
             return [t for t in self.data if t.status == arg]
 
-        elif filter_type == Filter.ROOT:
+        elif filter_type == Filter.PARENT:
             return [t for t in self.lookup.values() if not t.parent]
 
         elif filter_type == Filter.CHILDREN:
