@@ -72,6 +72,10 @@ class Task2(GObject.Object):
     """A single task."""
 
     __gtype_name__ = 'Task'
+    __slots__ = ['id', 'raw_title', 'content', 'tags',
+                 'children', 'status', 'parent', '_date_added',
+                 '_date_due', '_date_start', '_date_closed',
+                 '_date_modified']
 
 
     def __init__(self, id: uuid4, title: str) -> None:
