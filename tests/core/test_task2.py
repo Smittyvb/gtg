@@ -159,52 +159,52 @@ class TestTask2(TestCase):
         random_date = Date('1996-2-3')
         random_date2 = Date('2010-7-10')
 
-        task1.due_date = random_date
-        self.assertEqual(task1.due_date, random_date)
+        task1.date_due = random_date
+        self.assertEqual(task1.date_due, random_date)
 
-        task2.due_date = random_date
-        task3.due_date = random_date
-        task4.due_date = random_date
-        task5.due_date = random_date
-        task6.due_date = random_date
+        task2.date_due = random_date
+        task3.date_due = random_date
+        task4.date_due = random_date
+        task5.date_due = random_date
+        task6.date_due = random_date
 
         # Test changes in the parent - Fuzzy
-        task1.due_date = Date.now()
+        task1.date_due = Date.now()
 
-        self.assertEqual(task1.due_date, Date.now())
-        self.assertEqual(task2.due_date, random_date)
-        self.assertEqual(task3.due_date, random_date)
-        self.assertEqual(task4.due_date, random_date)
-        self.assertEqual(task5.due_date, random_date)
-        self.assertEqual(task6.due_date, random_date)
+        self.assertEqual(task1.date_due, Date.now())
+        self.assertEqual(task2.date_due, random_date)
+        self.assertEqual(task3.date_due, random_date)
+        self.assertEqual(task4.date_due, random_date)
+        self.assertEqual(task5.date_due, random_date)
+        self.assertEqual(task6.date_due, random_date)
 
         # Test changing child's due (after parent's)
-        task3.due_date = random_date2
-        self.assertEqual(task3.due_date, random_date2)
-        self.assertEqual(task4.due_date, random_date)
-        self.assertEqual(task5.due_date, random_date)
-        self.assertEqual(task6.due_date, random_date)
+        task3.date_due = random_date2
+        self.assertEqual(task3.date_due, random_date2)
+        self.assertEqual(task4.date_due, random_date)
+        self.assertEqual(task5.date_due, random_date)
+        self.assertEqual(task6.date_due, random_date)
 
 
         # Test changing child's due (before parent's)
-        task4.due_date = random_date2
-        task3.due_date = random_date
+        task4.date_due = random_date2
+        task3.date_due = random_date
 
-        self.assertEqual(task4.due_date, random_date)
-        self.assertEqual(task5.due_date, random_date)
-        self.assertEqual(task6.due_date, random_date)
+        self.assertEqual(task4.date_due, random_date)
+        self.assertEqual(task5.date_due, random_date)
+        self.assertEqual(task6.date_due, random_date)
 
         # Test changing parent's due (before child's)
-        task4.due_date = random_date
-        task3.due_date = random_date2
+        task4.date_due = random_date
+        task3.date_due = random_date2
 
-        self.assertEqual(task3.due_date, random_date2)
-        self.assertEqual(task4.due_date, random_date)
+        self.assertEqual(task3.date_due, random_date2)
+        self.assertEqual(task4.date_due, random_date)
 
         # Test changing parent's due (None or nodate)
-        task2.due_date = random_date
-        task1.due_date = None
-        self.assertEqual(task2.due_date, random_date)
+        task2.date_due = random_date
+        task1.date_due = None
+        self.assertEqual(task2.date_due, random_date)
 
 
     def test_new_simple(self):

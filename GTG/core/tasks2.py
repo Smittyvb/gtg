@@ -20,7 +20,7 @@ from gi.repository import GObject
 
 from uuid import uuid4
 import logging
-from typing import List, Callable
+from typing import List, Callable, Any
 from enum import Enum
 import re
 import datetime
@@ -83,11 +83,11 @@ class Task2(GObject.Object):
         self.status = Status.ACTIVE
         self.parent = None
 
-        self.date_added = Date.no_date()
+        self._date_added = Date.no_date()
         self._date_due = Date.no_date()
-        self.date_start = Date.no_date()
-        self.date_closed = Date.no_date()
-        self.date_modified = Date(datetime.datetime.now())
+        self._date_start = Date.no_date()
+        self._date_closed = Date.no_date()
+        self._date_modified = Date(datetime.datetime.now())
 
 
     def toggle_status(self, propagate: bool = True) -> None:
@@ -114,29 +114,69 @@ class Task2(GObject.Object):
             child.dismiss()
 
     @property
-    def due_date(self) -> str:
+    def date_due(self) -> str:
         return self._date_due
 
 
-    @due_date.setter
-    def due_date(self, value: Date) -> None:
+    @date_due.setter
+    def date_due(self, value: Date) -> None:
         self._date_due = value
 
         if not value or value.is_fuzzy():
             return
 
         for child in self.children:
-            if (child.due_date
-               and not child.due_date.is_fuzzy()
-               and child.due_date > value):
+            if (child.date_due
+               and not child.date_due.is_fuzzy()
+               and child.date_due > value):
 
-                child.due_date = value
+                child.date_due = value
 
         if (self.parent
-           and self.parent.due_date
-           and self.parent.due_date.is_fuzzy()
-           and self.parent.due_date < value):
-            self.parent.due_date = value
+           and self.parent.date_due
+           and self.parent.date_due.is_fuzzy()
+           and self.parent.date_due < value):
+            self.parent.date_due = value
+
+
+    @property
+    def date_added(self) -> str:
+        return self._date_added
+
+
+    @date_added.setter
+    def date_added(self, value: Any) -> None:
+        self._date_added = Date(value)
+
+
+    @property
+    def date_start(self) -> str:
+        return self._date_start
+
+
+    @date_start.setter
+    def date_start(self, value: any) -> None:
+        self._date_start = Date(value)
+
+
+    @property
+    def date_closed(self) -> str:
+        return self._date_closed
+
+
+    @date_closed.setter
+    def date_closed(self, value: any) -> None:
+        self._date_closed = Date(value)
+
+
+    @property
+    def date_modified(self) -> str:
+        return self._date_modified
+
+
+    @date_modified.setter
+    def date_modified(self, value: any) -> None:
+        self._date_modified = Date(value)
 
 
     @property
@@ -356,7 +396,7 @@ class TaskStore(BaseStore):
             done_date = SubElement(dates, 'done')
             done_date.text = task.date_closed.xml_str()
 
-            due_date = task.due_date
+            due_date = task.date_due
             due_tag = 'fuzzyDue' if due_date.is_fuzzy() else 'due'
             due = SubElement(dates, due_tag)
             due.text = due_date.xml_str()
