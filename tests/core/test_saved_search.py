@@ -106,8 +106,6 @@ class TestSavedSearch(TestCase):
         store.add(search_4, search_3.id)
         store.add(search_5, search_3.id)
 
-        store.print_tree()
-
 
     def test_remove_tree(self):
         store = SavedSearchStore()
