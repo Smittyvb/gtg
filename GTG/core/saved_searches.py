@@ -66,15 +66,18 @@ class SavedSearchStore(BaseStore):
     XML_TAG = 'savedSearch'
 
 
-    def __init__(self) -> None:
-        self.lookup = {}
-        self.data = []
-
-
     def __str__(self) -> str:
         """String representation."""
 
         return f'Saved Search Store. Holds {len(self.lookup)} search(es)'
+
+
+    def find(self, name: str) -> SavedSearch:
+        """Get a saved search by name."""
+
+        for search in self.data:
+            if search.name == name:
+                return search
 
 
     def from_xml(self, xml: Element) -> 'SavedSearchStore':
@@ -102,9 +105,11 @@ class SavedSearchStore(BaseStore):
                 tid = element.get('id')
 
                 parent = self.find(parent_name)
-                self.parent(tid, parent.id)
 
-                log.debug('Added %s as child of %s', tag, parent)
+                if parent:
+                    self.parent(tid, parent.id)
+
+                    log.debug('Added %s as child of %s', tag, parent)
 
 
     def to_xml(self) -> Element:
