@@ -16,6 +16,8 @@
 # this program.  If not, see <http://www.gnu.org/licenses/>.
 # -----------------------------------------------------------------------------
 
+from gi.repository import GObject
+
 from uuid import uuid4
 from dataclasses import dataclass, field
 import logging
@@ -28,15 +30,16 @@ from GTG.core.base_store import BaseStore
 log = logging.getLogger(__name__)
 
 
-@dataclass
-class SavedSearch:
+class SavedSearch(GObject.Object):
     """A saved search."""
 
-    id: uuid4
-    name: str
-    query: str
-    icon: str = None
-    children: List = field(default_factory=list)
+    def __init__(self, id: uuid4, name: str, query: str) -> None:
+        self.id = id
+        self.name = name
+        self.query = query
+
+        self.icon = None
+        self.children = []
 
 
     def __str__(self) -> str:
