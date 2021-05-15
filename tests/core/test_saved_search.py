@@ -183,19 +183,6 @@ class TestSavedSearch(TestCase):
         self.assertEqual(len(store.lookup['2ff11525-a209-4cd9-8f50-859592f1ee37'].children), 1)
 
 
-    def test_xml_load_bad(self):
-        store = SavedSearchStore()
-        xml_doc = XML('''
-    <searchList>
-        <savedSearch id="4796b97b-3690-4e74-a056-4153061958df" name="Urgent in tasks" query="urgent" />
-        <savedSearch id="588c9ffa-e96b-42a1-862b-8684fc09181e" name="More tasks 2" query="@yet_another" parent="89fdc73c-6776-4d65-8220-dffec1953fae"/>
-    </searchList>
-                 ''')
-
-        with self.assertRaises(KeyError):
-            store.from_xml(xml_doc)
-
-
     def test_xml_write_simple(self):
 
         store = SavedSearchStore()
