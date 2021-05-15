@@ -16,6 +16,8 @@
 # this program.  If not, see <http://www.gnu.org/licenses/>.
 # -----------------------------------------------------------------------------
 
+from gi.repository import GObject
+
 from uuid import uuid4
 import logging
 from typing import List, Callable
@@ -66,8 +68,11 @@ class Filter(Enum):
 # TASK
 # ------------------------------------------------------------------------------
 
-class Task2:
+class Task2(GObject.Object):
     """A single task."""
+
+    __gtype_name__ = 'Task'
+
 
     def __init__(self, id: uuid4, title: str) -> None:
         self.id = id
