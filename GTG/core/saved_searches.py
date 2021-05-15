@@ -33,6 +33,9 @@ log = logging.getLogger(__name__)
 class SavedSearch(GObject.Object):
     """A saved search."""
 
+    __gtype_name__ = 'SavedSearch'
+
+
     def __init__(self, id: uuid4, name: str, query: str) -> None:
         self.id = id
         self.name = name
