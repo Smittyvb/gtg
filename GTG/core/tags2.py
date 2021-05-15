@@ -35,6 +35,9 @@ log = logging.getLogger(__name__)
 class Tag2(GObject.Object):
     """A tag that can be applied to a Task."""
 
+    __gtype_name__ = 'Tag'
+
+
     def __init__(self, id: uuid4, name: str) -> None:
         self.id = id
         self.name = name
