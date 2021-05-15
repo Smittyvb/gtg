@@ -16,6 +16,7 @@
 # this program.  If not, see <http://www.gnu.org/licenses/>.
 # -----------------------------------------------------------------------------
 
+from gi.repository import GObject
 from gi.repository.Gdk import Color
 
 from uuid import uuid4
@@ -31,16 +32,17 @@ from GTG.core.base_store import BaseStore
 log = logging.getLogger(__name__)
 
 
-@dataclass
-class Tag2:
+class Tag2(GObject.Object):
     """A tag that can be applied to a Task."""
 
-    id: uuid4
-    name: str
-    icon: str = None
-    color: str = None
-    actionable: bool = True
-    children: List = field(default_factory=list)
+    def __init__(self, id: uuid4, name: str) -> None:
+        self.id = id
+        self.name = name
+
+        self.icon = None
+        self.color = None
+        self.actionable = True
+        self.children = []
 
 
     def __str__(self) -> str:
@@ -114,7 +116,10 @@ class TagStore(BaseStore):
             color = element.get('color')
             icon = element.get('icon')
 
-            tag = Tag2(id=tid, name=name, color=color, icon=icon)
+            tag = Tag2(id=tid, name=name)
+            tag.color = color
+            tag.icon = icon
+
             self.add(tag)
 
             log.debug('Added %s', tag)
