@@ -36,6 +36,7 @@ class Tag2(GObject.Object):
     """A tag that can be applied to a Task."""
 
     __gtype_name__ = 'Tag'
+    __slots__ = ['id', 'name', 'icon', 'color', 'actionable', 'children']
 
 
     def __init__(self, id: uuid4, name: str) -> None:
