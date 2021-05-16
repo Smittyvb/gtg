@@ -265,6 +265,18 @@ class Datastore2:
                 raise SystemError(f'Could not write a file at {path}')
 
 
+    def purge(self, max_days: int) -> None:
+        """Remove closed tasks older than N days."""
+
+        log.debug("Deleting old tasks")
+
+        today = Date.today()
+        for task in self.tasks.data:
+            if (today - task.date_closed).days > max_days:
+                self.tasks.remove(task.id)
+
+        
+
     # --------------------------------------------------------------------------
     # BACKENDS
     # --------------------------------------------------------------------------
