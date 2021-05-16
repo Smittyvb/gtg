@@ -24,6 +24,7 @@ import logging
 import shutil
 from datetime import datetime
 from time import time
+from collections import Counter
 
 from GTG.core.tasks2 import TaskStore
 from GTG.core.tags2 import TagStore
@@ -265,6 +266,18 @@ class Datastore2:
                 raise SystemError(f'Could not write a file at {path}')
 
 
+    def tag_counts(self) -> Counter:
+        """Number of tasks associated with each tag."""
+
+        tags = []
+
+        for task in self.tasks.data:
+            for tag in task.tags:
+                tags.append(tag.name)
+
+        return Counter(tags)
+
+
     def purge(self, max_days: int) -> None:
         """Remove closed tasks older than N days."""
 
@@ -275,7 +288,14 @@ class Datastore2:
             if (today - task.date_closed).days > max_days:
                 self.tasks.remove(task.id)
 
-        
+        tag_counter = self.tag_counts()
+
+        for tag in self.tags.data:
+            count = tag_counter.get(tag.name)
+            customized = tag.color or tag.icon
+            if (not count or count == 0) and not customized:
+                self.tags.remove(tag.id)
+
 
     # --------------------------------------------------------------------------
     # BACKENDS
