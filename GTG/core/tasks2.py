@@ -293,6 +293,7 @@ class TaskStore(BaseStore):
             self.data.append(task)
             self.lookup[tid] = task
 
+        self.emit('added', task)
         return task
 
 
