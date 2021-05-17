@@ -81,6 +81,24 @@ class BaseStore(GObject.Object):
         log.debug('Added %s', item)
 
 
+    @GObject.Signal(name='added', arg_types=(object,))
+    def add_signal(self, *args):
+        """Signal to emit when adding a new task."""
+        pass
+
+
+    @GObject.Signal(name='removed', arg_types=(object,))
+    def remove_signal(self, *args):
+        """Signal to emit when removing a new task."""
+        pass
+
+
+    @GObject.Signal(name='parent-change', arg_types=(object, object))
+    def parent_change_signal(self, *args):
+        """Signal to emit when a task parent changes."""
+        pass
+
+
     def remove(self, item_id: uuid4) -> None:
         """Remove an existing search from the store."""
 
@@ -101,6 +119,7 @@ class BaseStore(GObject.Object):
                     recursive_delete(child)
 
 
+        self.emit('removed', object())
         if item_id not in self.lookup.keys():
             raise KeyError
 
