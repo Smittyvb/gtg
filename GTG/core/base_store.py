@@ -40,6 +40,7 @@ class BaseStore(GObject.Object):
         self.lookup = {}
         self.data = []
 
+        super().__init__()
 
     # --------------------------------------------------------------------------
     # BASIC MANIPULATION
