@@ -262,9 +262,10 @@ class Task2(GObject.Object):
 class TaskStore(BaseStore):
     """A list of tasks."""
 
+    __gtype_name__ = 'TaskStore'
+
     #: Tag to look for in XML
     XML_TAG = 'task'
-
 
     def __init__(self) -> None:
         super().__init__()
