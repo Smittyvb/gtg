@@ -17,6 +17,7 @@
 # -----------------------------------------------------------------------------
 
 from gi.repository.Gdk import Color
+from gi.repository import GObject
 
 from abc import ABC, abstractmethod
 from uuid import uuid4
@@ -31,7 +32,7 @@ from typing import List, Any
 log = logging.getLogger(__name__)
 
 
-class BaseStore(ABC):
+class BaseStore(GObject.Object):
     """Base class for data stores."""
 
 
@@ -44,9 +45,8 @@ class BaseStore(ABC):
     # BASIC MANIPULATION
     # --------------------------------------------------------------------------
 
-    @abstractmethod
     def new(self) -> Any:
-        ...
+        raise NotImplemented
 
 
     def get(self, key: str) -> Any:
@@ -155,14 +155,12 @@ class BaseStore(ABC):
     # SERIALIZING
     # --------------------------------------------------------------------------
 
-    @abstractmethod
     def from_xml(self, xml: Element) -> Any:
-        ...
+        raise NotImplemented
 
 
-    @abstractmethod
     def to_xml(self) -> Element:
-        ...
+        raise NotImplemented
 
 
     # --------------------------------------------------------------------------
